@@ -23,12 +23,29 @@ module.exports = function(environment) {
     }
   };
 
+  ENV['ember-simple-auth-token'] = {
+    refreshAccessTokens: true,
+    refreshLeeway: 300, // refresh 5 minutes (300 seconds) before expiration
+    serverTokenEndpoint: '/token-auth/', // Server endpoint to send authenticate request
+    tokenPropertyName: 'token', // Key in server response that contains the access token
+    tokenDataPropertyName: 'tokenData', // Key in session to store token data
+    refreshAccessTokens: true, // Enables access token refreshing
+    tokenExpirationInvalidateSession: true, // Enables session invalidation on token expiration
+    serverTokenRefreshEndpoint: '/api/token-refresh/', // Server endpoint to send refresh request
+    refreshTokenPropertyName: 'refresh_token', // Key in server response that contains the refresh token
+    tokenExpireName: 'exp', // Field containing token expiration
+    refreshLeeway: 0, // Amount of time to send refresh request before token expiration
+    authorizationHeaderName: 'Authorization', // Header name added to each API request
+    authorizationPrefix: 'Bearer ', // Prefix added to each API request
+  };
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV['ember-simple-auth-token'].serverTokenEndpoint = 'http://localhost:8000/api-token-auth/';
   }
 
   if (environment === 'test') {
